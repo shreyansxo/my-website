@@ -22,7 +22,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
       },
     },
     logo: {
-      path: "./public/avaneesh.webp",
+      path: "./public/photo.jpeg",
       size: [250],
     },
   }),
