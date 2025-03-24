@@ -1,0 +1,153 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+
+import PageLayout from "@layouts/PageLayout.astro";
+
+import Container from "@components/Container.astro";
+import Skills from "@components/Skill.astro";
+import Projects from "@components/Projects.astro";
+import FAQs from "@components/FAQs.astro";
+
+import Link from "@components/Link.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+
+import {
+  SITE,
+  HOME,
+  SOCIALS,
+  skills,
+  webItems,
+  mobileItems,
+  backendItems,
+  toolsItems,
+  faqs,
+} from "@consts";
+import { dateDiffInYears } from "@lib/utils";
+
+const age = dateDiffInYears(new Date("2005-08-20"), new Date(Date.now()));
+
+const projects = (await getCollection("projects"))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
+
+const blog = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
+---
+
+<PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+  <Container>
+    <Image
+      src="/avaneesh.webp"
+      class="rounded-full animate mb-4"
+      alt="Avaneesh Chopdekar"
+      loading="eager"
+      width="80"
+      height="80"
+    />
+    <h4 class="animate font-semibold text-black dark:text-white">
+      Hi, I'm {SITE.NAME.split(" ")[0]}<span class="text-xl">👋🏻</span>
+    </h4>
+    <div class="space-y-16">
+      <section>
+        <article class="space-y-4">
+          <p class="animate">
+            I am {age} years old, computer science undergraduate student, and a full-stack
+            developer. I love building apps that tackle real-world problems and make
+            a difference.
+          </p>
+          <p class="animate">
+            You can review my <Link
+              href={SITE.RESUME}
+              aria-label="Avaneesh Chopdekar's Resume"
+              external
+            >
+              resume
+            </Link> for a quick overview of my skills and projects.
+          </p>
+        </article>
+      </section>
+
+      <section class="animate space-y-6">
+        <h5 class="font-semibold text-black dark:text-white">My skills</h5>
+        <Skills
+          tabs={skills}
+          tabPanels={[webItems, mobileItems, backendItems, toolsItems]}
+        />
+      </section>
+
+      {
+        projects.length > 0 ? (
+          <section class="animate space-y-6">
+            <div class="flex flex-wrap gap-y-2 items-center justify-between">
+              <h5 class="font-semibold text-black dark:text-white">
+                Recent projects
+              </h5>
+              <Link href="/projects"> See all projects </Link>
+            </div>
+            <Projects projects={projects} />
+          </section>
+        ) : null
+      }
+
+      <section class="animate space-y-6">
+        <h5 class="font-semibold text-black dark:text-white">FAQs</h5>
+        <FAQs faqs={faqs} />
+      </section>
+
+      <section class="animate space-y-6">
+        <div class="flex flex-wrap gap-y-2 items-center justify-between">
+          <h5 class="font-semibold text-black dark:text-white">Latest posts</h5>
+          <Link href="/blog"> See all posts </Link>
+        </div>
+        <ul class="flex flex-col gap-4">
+          {
+            blog.map((post) => (
+              <li>
+                <ArrowCard entry={post} />
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="animate space-y-4">
+        <h5 class="font-semibold text-black dark:text-white">Let's Connect</h5>
+        <article>
+          <p>
+            If you want to get in touch with me about something or just to say
+            hi, reach out on social media.
+          </p>
+        </article>
+        <ul class="flex flex-wrap gap-2">
+          <li class="flex gap-x-2 text-nowrap">
+            <Link
+              href={SITE.RESUME}
+              external
+              aria-label={`${SITE.NAME}'s resume`}
+            >
+              resume
+            </Link>
+          </li>
+          {
+            SOCIALS.map((SOCIAL) => (
+              <li class="flex gap-x-2 text-nowrap">
+                {"/"}
+                <Link
+                  href={SOCIAL.HREF}
+                  external
+                  aria-label={`${SITE.NAME} on ${SOCIAL.NAME}`}
+                >
+                  {SOCIAL.NAME}
+                </Link>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </Container>
+</PageLayout>

@@ -1,0 +1,95 @@
+---
+import { Image } from "astro:assets";
+
+export interface TabPanel {
+  name: string;
+  icon: string;
+}
+
+interface Props {
+  tabs: string[];
+  tabPanels: TabPanel[][];
+}
+
+const { tabs, tabPanels } = Astro.props;
+---
+
+<div id="tabs-container" class="my-3" role="tablist">
+  {
+    tabs.map((tab, index) => {
+      const isSelected = index === 0;
+      return (
+        <button
+          class={`tab-btn py-1 px-2 mr-2 rounded-md text-sm aria-selected:text-white aria-selected:bg-black dark:aria-selected:text-black dark:aria-selected:bg-white`}
+          role="tab"
+          id={`tab-${index}`}
+          aria-selected={isSelected}
+          aria-controls={`panel-${index}`}
+        >
+          {tab}
+        </button>
+      );
+    })
+  }
+</div>
+{
+  tabPanels.map((tabPanel, index) => {
+    const isSelected = index === 0;
+    return (
+      <div
+        aria-expanded={isSelected}
+        class={`tab-panel hidden aria-expanded:grid grid-cols-2 sm:grid-cols-4 gap-2`}
+        role="tabpanel"
+        aria-labelledby={`tab-${index}`}
+        id={`panel-${index}`}
+      >
+        {tabPanel.map((tabPanelItem) => {
+          return (
+            <span
+              class={`flex flex-col items-center justify-center gap-2 py-3 rounded-md border border-black/15 dark:border-white/20`}
+            >
+              <Image
+                src={tabPanelItem.icon}
+                class="dark:invert"
+                width={32}
+                height={32}
+                loading="eager"
+                alt=""
+                aria-labelledby={tabPanelItem.name}
+              />
+              <span class="text-sm">{tabPanelItem.name}</span>
+            </span>
+          );
+        })}
+      </div>
+    );
+  })
+}
+
+<script is:inline data-astro-rerun>
+  function main() {
+    const tabs = document.querySelectorAll(".tab-btn");
+    const panels = document.querySelectorAll(".tab-panel");
+
+    function selectTab(tab, index) {
+      tabs.forEach((tab) => {
+        tab.setAttribute("aria-selected", "false");
+      });
+      panels.forEach((panel) => panel.setAttribute("aria-expanded", "false"));
+      tab.setAttribute("aria-selected", "true");
+      panels[index].setAttribute("aria-expanded", "true");
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => {
+        selectTab(tab, index);
+      });
+    });
+  }
+
+  main();
+
+  document.addEventListener("astro:page-load", () => {
+    main();
+  });
+</script>

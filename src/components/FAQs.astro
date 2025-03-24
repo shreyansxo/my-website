@@ -1,0 +1,82 @@
+---
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  faqs: FAQ[];
+}
+
+const { faqs } = Astro.props;
+---
+
+<ul class="space-y-4">
+  {
+    faqs.map((faq) => (
+      <li class="relative group py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out">
+        <details class="details-item peer flex flex-col flex-1">
+          <summary class="font-semibold cursor-pointer first-of-type:list-none">
+            {faq.question}
+          </summary>
+          <p class="text-sm mt-1">{faq.answer}</p>
+        </details>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          class="arrow-icon cursor-pointer absolute top-6 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current rotate-90 peer-open:rotate-[270deg] transition-transform duration-300 ease-in-out"
+        >
+          <line
+            x1="5"
+            y1="12"
+            x2="19"
+            y2="12"
+            class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
+          />
+          <polyline
+            points="12 5 19 12 12 19"
+            class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"
+          />
+        </svg>
+      </li>
+    ))
+  }
+</ul>
+
+<script is:inline data-astro-rerun>
+  function main() {
+    const details = document.querySelectorAll(".details-item");
+    const arrowIcons = document.querySelectorAll(".arrow-icon");
+
+    function deselectOtherDetails(detail) {
+      // Close all other open details
+      details.forEach((otherDetail) => {
+        if (otherDetail !== detail && otherDetail.open) {
+          otherDetail.open = false;
+        }
+      });
+    }
+
+    details.forEach((detail) => {
+      detail.addEventListener("click", () => {
+        deselectOtherDetails(detail);
+      });
+    });
+
+    arrowIcons.forEach((arrowIcon, index) => {
+      arrowIcon.addEventListener("click", () => {
+        const detail = details[index];
+        if (detail.open) {
+          detail.open = false;
+        } else {
+          deselectOtherDetails(detail);
+          detail.open = true;
+        }
+      });
+    });
+  }
+
+  main();
+
+  document.addEventListener("astro:page-load", main);
+</script>
