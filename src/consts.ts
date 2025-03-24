@@ -2,8 +2,8 @@ import type { Site, Metadata, Socials } from "@types";
 import type { TabPanel } from "@components/Skill.astro";
 
 export const SITE: Site = {
-  NAME: "Avaneesh Chopdekar",
-  RESUME: "/avaneesh-chopdekar-resume.pdf",
+  NAME: "Shreyans Joshi",
+  RESUME: "/Resume_Shreyans.pdf",
   NUM_POSTS_ON_HOMEPAGE: 3,
   NUM_WORKS_ON_HOMEPAGE: 2,
   NUM_PROJECTS_ON_HOMEPAGE: 3,
@@ -11,7 +11,7 @@ export const SITE: Site = {
 
 export const HOME: Metadata = {
   TITLE: "Home",
-  DESCRIPTION: "My personal portfolio and blog made using Astro",
+  DESCRIPTION: "Shreyans Joshi product portfolio",
 };
 
 export const BLOG: Metadata = {
@@ -27,17 +27,9 @@ export const PROJECTS: Metadata = {
 
 export const SOCIALS: Socials = [
   {
-    NAME: "github",
-    HREF: "https://github.com/avaneesh-chopdekar",
-  },
-  {
     NAME: "linkedin",
-    HREF: "https://www.linkedin.com/in/avaneesh-chopdekar",
-  },
-  {
-    NAME: "twitter-x",
-    HREF: "https://twitter.com/@HelloAvaneesh",
-  },
+    HREF: "https://www.linkedin.com/in/shreyansjoshi",
+  }
 ];
 
 export const skills = ["Web", "Mobile", "Backend", "Tools"];

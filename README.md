@@ -1,4 +1,4 @@
-# Welcome to Avaneesh Chopdekar's Portfolio
+# Welcome to Shreyans' Portfolio
 
 ![Homepage](public/og/home.jpg)
 

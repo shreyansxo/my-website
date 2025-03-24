@@ -2,7 +2,7 @@
 title: "Haven"
 description: "Developed a global video call and chat messaging app with real-time communication using WebRTC and Socket.io, incorporating TensorFlow.js for object detection, profanity filters for user safety, and a Pub/Sub model for infinite scalability."
 date: "August 30 2024"
-repoURL: "https://github.com/avaneesh-chopdekar/haven"
+repoURL: "https://github.com/shreyansxo/my-website"
 video: "/demo/haven.mp4"
 tags: ["next.js", "webrtc", "socket.io", "pub-sub", "tensorflow.js"]
 ---
@@ -39,4 +39,4 @@ Haven is a video call and chat messaging app that connects people across the glo
 
 ### Contributing
 
-We welcome contributions from the open-source community. If you're interested in contributing, please join our [GitHub repository](https://github.com/avaneesh-chopdekar/haven).
+We welcome contributions from the open-source community. If you're interested in contributing, please join our [GitHub repository](https://github.com/shreyansxo/my-website).
